@@ -42,7 +42,7 @@ public class Champion
 	public void takeDamage(String nameOtherChampion, int lifeOtherChampion, int attackOtherChampion, int armorOtherChampion) 
 	{
 		this.life = (attackOtherChampion > this.armor)? this.life  -= attackOtherChampion - this.armor : this.life - 1;
-		if(this.life < 0)
+		if(this.life < 0) 
 		{
 			this.life = 0;
 		}
