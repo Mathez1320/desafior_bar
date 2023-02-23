@@ -2,46 +2,63 @@ package program;
 
 import java.util.Locale;
 import java.util.Scanner;
+import game.Champion;
 
-import pub.Bill;
-import java.util.Scanner;
-import java.util.Locale;
-
-public class Program {
-
-	public static void main(String[] args) {
-		
+public class Program
+{
+	public static void main(String[] args)
+	{
 		Locale.setDefault(Locale.US);
 		Scanner sc = new Scanner(System.in);
-
-		Bill billFromCliente = new Bill();
 		
-		System.out.print("Sexo: ");
-		billFromCliente.gender = sc.next().charAt(0);
+		String[] nameChampion = new String[2];
+		int[] lifeChampion    = new int[2]; 
+		int[] attackChampion  = new int[2];
+		int[] armorChampion   = new int[2];
 		
-		System.out.print("Quantidade de cervejas: ");
-		billFromCliente.beer = sc.nextInt();
+		Champion championOne, championTwo;
 		
-		System.out.print("Quantidade de refrigerantes: ");
-		billFromCliente.softDrink = sc.nextInt();
+		System.out.println("Digite os dados do primeiro campeão: ");
 		
-		System.out.print("Quantidade de espetinhos: ");
-		billFromCliente.barbercue = sc.nextInt();
-		
-		
-		
-		System.out.println("RELATÓRIO:  ");
-		System.out.printf("Consumo = R$ %.2f%n ", billFromCliente.feeding());
-		if(billFromCliente.cover() > 0)
+		int number = 2;
+		for(int count = 0; count < number; count++)
 		{
-			System.out.printf("Couver = %.2f%n", billFromCliente.cover());
-		}else 
-		{
-			System.out.println("Isento de Couvert");
+			System.out.print("Name:  ");
+			nameChampion[count] = sc.nextLine();
+			
+			System.out.print("Life:  ");
+			lifeChampion[count] = sc.nextInt(); 
+			
+			System.out.print("Attack:  ");
+			attackChampion[count] = sc.nextInt();
+			
+			System.out.print("Armor:  ");
+			armorChampion[count] = sc.nextInt();
+			sc.nextLine();
 		}
-		System.out.printf("Ingresso = R$ %.2f%n ", billFromCliente.ticket());
-		System.out.printf("Valor a pagar = R$ %.2f%n", billFromCliente.total());
+		
+		championOne = new Champion(nameChampion[0], lifeChampion[0], attackChampion[0], armorChampion[0]);
+		championTwo = new Champion(nameChampion[1], lifeChampion[1], attackChampion[1], armorChampion[1]);
+		
+		System.out.print("Quantos turnos você deseja executar ? ");
+		int numbersTurns = sc.nextInt();
+		
+		for(int count = 0; count < numbersTurns; count++)
+		{
+			System.out.println("Resultado do Turno:  " + (count + 1));			
+			championOne.takeDamage(championTwo.getName(), championTwo.getLife(), championTwo.getAttack(), championTwo.getArmor());
+			championTwo.takeDamage(championOne.getName(), championOne.getLife(), championOne.getAttack(), championOne.getArmor());
+			
+			System.out.println(championOne.status());
+			System.out.println(championTwo.status());
+			
+			if(championOne.getLife() == 0 || championTwo.getLife() == 0 )
+			{
+				numbersTurns = 0;
+			}							
+		}
+		
+		System.out.println("FIM DO COMBATE");
 		sc.close();
 	}
-
 }
